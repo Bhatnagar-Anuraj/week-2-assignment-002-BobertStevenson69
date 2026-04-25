@@ -52,37 +52,23 @@ def generate_pattern():
         3. Inside the loop, use a conditional to vary object properties.
         4. Create and position each object.
     """
-    # --- Configuration variables ---
-    num_rows = 5        # Number of rows in the pattern.
-    num_cols = 5        # Number of columns in the pattern.
-    spacing = 3.0       # Distance between object centers.
 
-    # TODO: Create a nested loop that iterates over rows and columns.
-    #
-    # HINT -- your loop structure should look something like this:
-    #
-    #   for row in range(num_rows):
-    #       for col in range(num_cols):
-    #           # Calculate position
-    #           x_pos = col * spacing
-    #           z_pos = row * spacing
-    #
-    #           # TODO: Add a conditional here that changes something
-    #           # based on row, col, or (row + col).
-    #           # For example:
-    #           #   if (row + col) % 2 == 0:
-    #           #       create a cube
-    #           #   else:
-    #           #       create a sphere
-    #
-    #           # TODO: Create the object using cmds.polyCube(), etc.
-    #
-    #           # TODO: Position the object using cmds.move().
-    #
-    #           # TODO: (Optional) Vary the scale using cmds.scale().
+    for row in range(num_rows):
+        for col in range(num_cols):
+            x_pos = (col - (num_cols - 1) / 2) * spacing
+            z_pos = (row - (num_rows - 1) / 2) * spacing
+            #Changes first row and col to start at x=-6
+            
+            cube_name = f"Cube_{row}_{col}" #Names cube with the row and col number
+            cmds.polyCube(name=cube_name,w=1,h=1,d=1,)[0] #Creates cube
+            cmds.move(x_pos, 0.5, z_pos, cube_name) 
+            #Moves cube to right position based off above algarithim and on ground plane
 
-    pass  # Remove this line once you add your code.
-
+            if (row + col) % 2 == 0: #For every other cube from first
+               cmds.scale(1,1,1,)
+            else: #Every cube that doesn't meet if statement
+               cmds.scale(2,2,2,) #Scales it by 2
+               cmds.move(x_pos, 1, z_pos, cube_name) #Moves scaled cube to ground plane
 
 # ---------------------------------------------------------------------------
 # Run the generator
